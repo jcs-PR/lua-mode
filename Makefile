@@ -25,28 +25,28 @@ dist:
 	rm -f $(DISTFILE) && \
 	git archive --format=zip -o $(DISTFILE) --prefix=lua-mode/ HEAD
 
-.PHONY: test-compiled-nocask test-uncompiled-nocask test-compiled test-uncompiled
+.PHONY: test-compiled-noeask test-uncompiled-noeask test-compiled test-uncompiled
 # check both regular and compiled versions
-test-nocask: test-compiled-nocask test-uncompiled-nocask
+test-noeask: test-compiled-noeask test-uncompiled-noeask
 
 test: test-compiled test-uncompiled
 
-test-compiled-nocask: $(LUA_MODE_ELC)
+test-compiled-noeask: $(LUA_MODE_ELC)
 	$(EMACS) -batch -l $(LUA_MODE_ELC) -l buttercup -f buttercup-run-discover
 
-test-uncompiled-nocask:
+test-uncompiled-noeask:
 	$(EMACS) -batch -l lua-mode.el -l buttercup -f buttercup-run-discover
 
 test-compiled: $(LUA_MODE_ELC)
-	EMACS=$(EMACS) cask exec buttercup -l $(LUA_MODE_ELC)
+	EMACS=$(EMACS) eask exec buttercup -l $(LUA_MODE_ELC)
 
 test-uncompiled:
-	EMACS=$(EMACS) cask exec buttercup -l lua-mode.el
+	EMACS=$(EMACS) eask exec buttercup -l lua-mode.el
 
 tryout:
-	cask exec $(EMACS) -Q -l init-tryout.el test.lua
+	eask exec $(EMACS) -Q -l init-tryout.el test.lua
 
-tryout-nocask:
+tryout-noeask:
 	$(EMACS) -Q -l init-tryout.el test.lua
 
 release:
