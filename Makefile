@@ -19,11 +19,11 @@ default:
 %.elc: %.el
 	$(EMACS_BATCH) -f batch-byte-compile $<
 
-compile: $(LUA_MODE_ELC)
+compile:
+	eask compile
 
 dist:
-	rm -f $(DISTFILE) && \
-	git archive --format=zip -o $(DISTFILE) --prefix=lua-mode/ HEAD
+	eask package
 
 .PHONY: test-compiled-noeask test-uncompiled-noeask test-compiled test-uncompiled
 # check both regular and compiled versions
@@ -37,13 +37,15 @@ test-compiled-noeask: $(LUA_MODE_ELC)
 test-uncompiled-noeask:
 	$(EMACS) -batch -l lua-mode.el -l buttercup -f buttercup-run-discover
 
-test-compiled: $(LUA_MODE_ELC)
+test-compiled:
 	eask install-deps --dev
-	eask exec buttercup -l $(LUA_MODE_ELC)
+	eask compile
+	eask test buttercup
 
 test-uncompiled:
 	eask install-deps --dev
-	eask exec buttercup -l lua-mode.el
+	eask clean elc
+	eask test buttercup
 
 tryout:
 	eask exec $(EMACS) -Q -l init-tryout.el test.lua
