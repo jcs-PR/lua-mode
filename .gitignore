@@ -3,4 +3,5 @@ release-notes-*
 *~
 *.elc
 
-/.cask
+/.eask
+/dist
