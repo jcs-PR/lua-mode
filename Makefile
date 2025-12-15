@@ -40,12 +40,12 @@ test-uncompiled-noeask:
 test-compiled:
 	eask install-deps --dev
 	eask compile
-	eask test buttercup
+	eask test buttercup --verbose 5
 
 test-uncompiled:
 	eask install-deps --dev
 	eask clean elc
-	eask test buttercup
+	eask test buttercup --verbose 5
 
 tryout:
 	eask exec $(EMACS) -Q -l init-tryout.el test.lua
