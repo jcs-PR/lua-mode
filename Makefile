@@ -38,10 +38,12 @@ test-uncompiled-noeask:
 	$(EMACS) -batch -l lua-mode.el -l buttercup -f buttercup-run-discover
 
 test-compiled: $(LUA_MODE_ELC)
-	EMACS=$(EMACS) eask exec buttercup -l $(LUA_MODE_ELC)
+	eask install-deps --dev
+	eask exec buttercup -l $(LUA_MODE_ELC)
 
 test-uncompiled:
-	EMACS=$(EMACS) eask exec buttercup -l lua-mode.el
+	eask install-deps --dev
+	eask exec buttercup -l lua-mode.el
 
 tryout:
 	eask exec $(EMACS) -Q -l init-tryout.el test.lua

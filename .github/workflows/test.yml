@@ -14,16 +14,22 @@ jobs:
           - '28.2'
           - '29.4'
           - '30.2'
+        experimental: [false]
         include:
-          # - emacs_version: 'snapshot'
-          #   os: ubuntu-latest
-          #   allow_failure: true
-          # - os: macos-latest
-          #   emacs_version: '24.3'
+        - os: ubuntu-latest
+          emacs-version: snapshot
+          experimental: true
+        - os: macos-latest
+          emacs-version: snapshot
+          experimental: true
+        - os: windows-latest
+          emacs-version: snapshot
+          experimental: true
+        exclude:
           - os: macos-latest
-            emacs_version: '25.1'
+            emacs-version: 26.3
           - os: macos-latest
-            emacs_version: '27.1'
+            emacs-version: 27.2
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
@@ -48,8 +54,8 @@ jobs:
 
       - name: Run tests
         if: matrix.allow_failure != true
-        run: 'eask && make test'
+        run: 'make test'
 
       - name: Run tests (allow failure)
         if: matrix.allow_failure == true
-        run: 'eask && make test || true'
+        run: 'make test || true'
