@@ -47,8 +47,8 @@ jobs:
 
       - name: Run tests
         if: matrix.allow_failure != true
-        run: 'cask && make test'
+        run: 'eask && make test'
 
       - name: Run tests (allow failure)
         if: matrix.allow_failure == true
-        run: 'cask && make test || true'
+        run: 'eask && make test || true'
